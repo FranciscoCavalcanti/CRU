@@ -29,15 +29,15 @@
 # install packages
 ####################
 
-#install.packages("ncdf4", "raster", "sf", "tmap")
-#install.packages("tmap")
-#install.packages("tidyverse")
+# install.packages("ncdf4", "raster", "sf", "tmap")
+# install.packages("tmap")
+# install.packages("tidyverse")
 
 # installing packages
-#packages_vector <- c("ggplot2", "tidyverse", "dplyr")
-#geopackages <- c("raster", "ncdf4", "sf")
-#lapply(packages_vector, require, character.only = TRUE) # the "lapply" function means "apply this function to the elements of this list or more restricted data
-#lapply(geopackages, require, character.only = TRUE)
+# packages_vector <- c("ggplot2", "tidyverse", "dplyr")
+# geopackages <- c("raster", "ncdf4", "sf")
+# lapply(packages_vector, require, character.only = TRUE) # the "lapply" function means "apply this function to the elements of this list or more restricted data
+# lapply(geopackages, require, character.only = TRUE)
 
 ####################
 # Folder Path
@@ -95,9 +95,10 @@ crs(shapefile)
 setwd(data_ncdf_dir)
 fileinput <- list.files(pattern = "scPDSI")
 fileouput <- file.path(tmp_dir, "scPDSI.nc")
-gunzip(fileinput,          # Pathname of input file
-       fileouput,        # Pathname of output file
-       overwrite = TRUE)
+gunzip(fileinput, # Pathname of input file
+  fileouput, # Pathname of output file
+  overwrite = TRUE
+)
 
 # the data format: netcdf
 setwd(tmp_dir)
@@ -122,15 +123,15 @@ extract <- raster::extract
 # Extract the mean value of cells within AMC polygon
 # Alternative: look to "mask" function ?mask
 masked_file <- extract(temp_file1,
-                       shapefile,
-                       fun = mean,
-                       na.rm = TRUE,
-                       df = F,
-                       small = T,
-                       sp = T,
-                       weights = TRUE,
-                       normalizedweights = TRUE
-                       )
+  shapefile,
+  fun = mean,
+  na.rm = TRUE,
+  df = F,
+  small = T,
+  sp = T,
+  weights = TRUE,
+  normalizedweights = TRUE
+)
 
 #################################################
 # Loop
@@ -141,8 +142,8 @@ nl <- masked_file@data %>%
 
 # begin of loop
 for (i in 27:nl) {
-  
-  
+
+
   # extract only relevant variables
   munic <- masked_file$GEOCODIG_M
   amc_1980 <- masked_file$amc_1980_2
@@ -150,20 +151,20 @@ for (i in 27:nl) {
   date <- masked_file[i] %>%
     names() %>%
     str_sub(start = 2, end = 11)
-  
+
   # Compile the codes for AMC and time variable in one dataframe
   df <- data.frame(munic, amc_1980, scPDSI, date)
-  
+
   # rename variables
   colnames(df)[3] <- "monthly_scPDSI"
-  
+
   # save data as .csv
   setwd(out_dir)
   write.csv(df,
-            paste0(out_dir, "/amc_scPDSI_csv/", date, "_amc_scPDSI.csv"),
-            row.names = TRUE,
+    paste0(out_dir, "/amc_scPDSI_csv/", date, "_amc_scPDSI.csv"),
+    row.names = TRUE,
   ) # overwrites
-  
+
   # print
   print(i)
   print(date)
