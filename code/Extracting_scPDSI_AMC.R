@@ -18,7 +18,7 @@
 # There are two important datasets:
 #
 # 1) Shapefile data of AMC for Brazil
-# 2) NetCDF data of precipitation from CRU
+# 2) NetCDF data of scPDSI from CRU
 #
 # The outcome is .csv files by month and AMC
 #
