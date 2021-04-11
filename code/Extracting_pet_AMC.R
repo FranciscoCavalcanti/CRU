@@ -97,7 +97,8 @@ fileinput <- list.files(pattern = "cru_ts4.05.1901.2020.pet.dat.nc")
 fileouput <- file.path(tmp_dir, "potentialevapotranspiration.nc")
 gunzip(fileinput, # Pathname of input file
   fileouput, # Pathname of output file
-  overwrite = TRUE
+  overwrite = TRUE,
+  remove = FALSE
 )
 
 # the data format: netcdf
@@ -174,9 +175,5 @@ for (i in 27:nl) {
 
 # remove all
 setwd(tmp_dir)
-
-# Check its existence
-if (file.exists(fileouput)) {
-  # Delete file if it exists
-  file.remove(fileouput)
-}
+deletefiles <- list.files(pattern = ".nc")
+file.remove(deletefiles)
