@@ -148,21 +148,21 @@ for (i in 27:nl) {
   # extract only relevant variables
   munic <- masked_file$GEOCODIG_M
   amc_1980 <- masked_file$amc_1980_2
-  scPDSI <- masked_file[i]
+  tmp <- masked_file[i]
   date <- masked_file[i] %>%
     names() %>%
     str_sub(start = 2, end = 11)
 
   # Compile the codes for AMC and time variable in one dataframe
-  df <- data.frame(munic, amc_1980, scPDSI, date)
+  df <- data.frame(munic, amc_1980, tmp, date)
 
   # rename variables
-  colnames(df)[3] <- "monthly_scPDSI"
+  colnames(df)[3] <- "monthly_tmp"
 
   # save data as .csv
   setwd(out_dir)
   write.csv(df,
-    paste0(out_dir, "/amc_scPDSI_csv/", date, "_amc_scPDSI.csv"),
+    paste0(out_dir, "/amc_tmp_csv/", date, "_amc_tmp.csv"),
     row.names = TRUE,
   ) # overwrites
 
