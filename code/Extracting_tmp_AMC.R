@@ -53,11 +53,8 @@ if (user == "Francisco") {
   stop("Invalid user")
 }
 
-home_dir <- file.path(ROOT, "Consultancy", "2021-Steven_Helfand", "New_Database_on_Climate", "build", "cru")
-in_dir <- file.path(ROOT, "Consultancy", "2021-Steven_Helfand", "New_Database_on_Climate", "build", "cru", "input")
-out_dir <- file.path(ROOT, "Consultancy", "2021-Steven_Helfand", "New_Database_on_Climate", "build", "cru", "output")
-tmp_dir <- file.path(ROOT, "Consultancy", "2021-Steven_Helfand", "New_Database_on_Climate", "build", "cru", "tmp")
-code_dir <- file.path(ROOT, "Consultancy", "2021-Steven_Helfand", "New_Database_on_Climate", "build", "cru", "code")
+out_dir <- file.path(ROOT, "Consultancy", "2021-Steven_Helfand", "New_Database_on_Climate", "build", "cru")
+tmp_dir <- file.path(ROOT, "Consultancy", "2021-Steven_Helfand", "New_Database_on_Climate", "tmp")
 data_shp_dir <- file.path(ROOT, "data_sources", "Shapefiles", "AMC_Ehrl")
 data_ncdf_dir <- file.path(ROOT, "data_sources", "Climatologia", "CRU", "input")
 
@@ -93,7 +90,7 @@ crs(shapefile)
 
 # Unzip
 setwd(data_ncdf_dir)
-fileinput <- list.files(pattern = "cru_ts4.05.1901.2020.tmp.dat")
+fileinput <- list.files(pattern = "cru_ts4.05.1901.2020.tmp.dat.nc")
 fileouput <- file.path(tmp_dir, "temperature.nc")
 gunzip(fileinput, # Pathname of input file
   fileouput, # Pathname of output file
@@ -108,7 +105,7 @@ print(list_files)
 length(list_files)
 
 # call netcdf file
-temp_file1 <- brick(list_files) # read netcdf file
+temp_file1 <- raster::brick(list_files) # read netcdf file
 
 # check the data
 extent(temp_file1)
